@@ -2,8 +2,8 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
-class ModalProduto extends StatelessWidget {
-  ModalProduto(
+class ModalProduto extends StatefulWidget {
+  const ModalProduto(
       {super.key,
       required this.titulo,
       required this.subtitulo,
@@ -13,6 +13,28 @@ class ModalProduto extends StatelessWidget {
   final String subtitulo;
   final String valor;
   final String img;
+
+  @override
+  State<ModalProduto> createState() => _ModalProdutoState();
+}
+
+class _ModalProdutoState extends State<ModalProduto> {
+  int qtd = 1;
+
+  void AdicionarQtd() {
+    setState(() {
+      qtd++;
+    });
+  }
+
+  void DiminuiQtd() {
+    setState(() {
+      if (qtd > 1) {
+        qtd--;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -21,7 +43,7 @@ class ModalProduto extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(titulo),
+          title: Text(widget.titulo),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -33,25 +55,25 @@ class ModalProduto extends StatelessWidget {
                   height: 280,
                   child: Center(
                     child: Image.network(
-                      img,
+                      widget.img,
                       fit: BoxFit.contain,
                     ),
                   ),
                 ),
                 Text(
-                  titulo,
+                  widget.titulo,
                   style: const TextStyle(fontSize: 30),
                 ),
                 const SizedBox(
                   height: 15,
                 ),
-                Text(subtitulo, style: const TextStyle(fontSize: 18)),
+                Text(widget.subtitulo, style: const TextStyle(fontSize: 18)),
                 const SizedBox(
                   height: 15,
                 ),
                 Text(
                   // ignore: prefer_interpolation_to_compose_strings
-                  "R\$ " + valor,
+                  "R\$ " + widget.valor,
                   style: TextStyle(fontSize: 25, color: Colors.green[500]),
                 ),
                 const SizedBox(
@@ -88,11 +110,12 @@ class ModalProduto extends StatelessWidget {
                         child: Row(
                           children: [
                             IconButton(
-                                onPressed: () {},
+                                onPressed: DiminuiQtd,
                                 icon: const Icon(Icons.remove)),
-                            const Text('1'),
+                            Text('$qtd'),
                             IconButton(
-                                onPressed: () {}, icon: const Icon(Icons.add)),
+                                onPressed: AdicionarQtd,
+                                icon: const Icon(Icons.add)),
                           ],
                         )),
                     ElevatedButton(
