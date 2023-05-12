@@ -21,8 +21,17 @@ class CarrinhoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removerItem(int index) {
-    _itensCarrinho.removeAt(index);
+  void removerItem(item) {
+    int index = _itensCarrinho
+        .indexWhere((element) => element['titulo'] == item['titulo']);
+
+    if (index >= 0) {
+      if (_itensCarrinho[index]['qtd'] == 1) {
+        _itensCarrinho.removeAt(index);
+      } else {
+        _itensCarrinho[index]['qtd'] -= 1;
+      }
+    }
     notifyListeners();
   }
 }

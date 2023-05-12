@@ -127,8 +127,12 @@ class _ModalProdutoState extends State<ModalProduto> {
                         )),
                     ElevatedButton(
                         onPressed: () {
-                          carrinhoProvider
-                              .adicionarItem({'titulo': widget.titulo}, qtd);
+                          carrinhoProvider.adicionarItem({
+                            'titulo': widget.titulo,
+                            'valor': widget.valor,
+                            'img': widget.img,
+                            'subtitulo': widget.subtitulo
+                          }, qtd);
                         },
                         child: const Text('Adicionar'))
                   ],
