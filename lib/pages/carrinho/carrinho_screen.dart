@@ -26,63 +26,80 @@ class _CarrinhoScreenState extends State<CarrinhoScreen> {
                   itemBuilder: (context, index) {
                     var item = carrinhoProvider.itensCarrinho[index];
                     var valorTotal = double.parse(item['valor']) * item['qtd'];
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Image.network(
-                          item['img'],
-                          height: 80,
-                          width: 80,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    return Card(
+                      color: Colors.grey[300],
+                      child: Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
-                              item['titulo'],
+                            Image.network(
+                              item['img'],
+                              height: 80,
+                              width: 80,
                             ),
-                            const SizedBox(
-                              height: 5,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  item['titulo'],
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  'R\$ ' + valorTotal.toStringAsFixed(2),
+                                ),
+                              ],
+                            ),
+                            const Spacer(),
+                            IconButton(
+                              onPressed: () {
+                                carrinhoProvider.removerItem(item);
+                              },
+                              icon: Icon(Icons.remove),
                             ),
                             Text(
-                              'R\$ ' + valorTotal.toStringAsFixed(2),
+                              item['qtd'].toString(),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                carrinhoProvider.adicionarItem(item, 1);
+                              },
+                              icon: Icon(Icons.add),
                             ),
                           ],
                         ),
-                        const Spacer(),
-                        IconButton(
-                          onPressed: () {
-                            carrinhoProvider.removerItem(item);
-                          },
-                          icon: Icon(Icons.remove),
-                        ),
-                        Text(
-                          item['qtd'].toString(),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            carrinhoProvider.adicionarItem(item, 1);
-                          },
-                          icon: Icon(Icons.add),
-                        ),
-                      ],
+                      ),
                     );
                   },
                 );
               },
             ),
           ),
-          Container(
-            width: double.infinity,
-            height: 50,
-            margin: EdgeInsets.all(16),
-            child: ElevatedButton(
-              onPressed: () {
-                // Ação do botão de finalizar compra
-              },
-              child: Text('Finalizar Compra'),
+          Card(
+            child: SizedBox(
+              width: double.infinity,
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Subtotal'),
+                    Text('Taxa de Entrega'),
+                    Text('Total'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text('10'),
+                      ],
+                    )
+                  ],
+                ),
+              ),
             ),
-          ),
+          )
         ],
       ),
     );
