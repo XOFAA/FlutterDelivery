@@ -1,10 +1,11 @@
-import 'dart:ffi';
-
+import 'package:delivery/pages/carrinho/carrinho_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ModalProduto extends StatefulWidget {
   const ModalProduto(
       {super.key,
+      required this.id,
       required this.titulo,
       required this.subtitulo,
       required this.valor,
@@ -13,6 +14,7 @@ class ModalProduto extends StatefulWidget {
   final String subtitulo;
   final String valor;
   final String img;
+  final int id;
 
   @override
   State<ModalProduto> createState() => _ModalProdutoState();
@@ -21,6 +23,7 @@ class ModalProduto extends StatefulWidget {
 class _ModalProdutoState extends State<ModalProduto> {
   int qtd = 1;
 
+  List<Map<String, dynamic>> carrinho = [];
   void AdicionarQtd() {
     setState(() {
       qtd++;
@@ -37,6 +40,7 @@ class _ModalProdutoState extends State<ModalProduto> {
 
   @override
   Widget build(BuildContext context) {
+    final carrinhoProvider = Provider.of<CarrinhoProvider>(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -67,9 +71,12 @@ class _ModalProdutoState extends State<ModalProduto> {
                 const SizedBox(
                   height: 15,
                 ),
-                Text(widget.subtitulo, style: const TextStyle(fontSize: 18)),
+                SizedBox(
+                    height: 40,
+                    child: Text(widget.subtitulo,
+                        style: const TextStyle(fontSize: 18))),
                 const SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 Text(
                   // ignore: prefer_interpolation_to_compose_strings
@@ -119,7 +126,11 @@ class _ModalProdutoState extends State<ModalProduto> {
                           ],
                         )),
                     ElevatedButton(
-                        onPressed: () {}, child: const Text('Adicionar'))
+                        onPressed: () {
+                          carrinhoProvider
+                              .adicionarItem({'titulo': widget.titulo}, qtd);
+                        },
+                        child: const Text('Adicionar'))
                   ],
                 ),
               ],

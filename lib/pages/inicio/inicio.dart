@@ -1,3 +1,4 @@
+import 'package:delivery/pages/carrinho/carrinho_screen.dart';
 import 'package:delivery/pages/listar/lista_produto.dart';
 import 'package:delivery/widget/menu_bottom.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _InicioState extends State<Inicio> with TickerProviderStateMixin {
             ListarProduto(),
             Center(child: Text('2')),
             Center(child: Text('3')),
-            Center(child: Text('4'))
+            CarrinhoScreen(),
           ]),
       bottomNavigationBar: MenuBottom(
         indexSelecionado: indexAtual,

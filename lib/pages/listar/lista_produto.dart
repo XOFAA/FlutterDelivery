@@ -76,8 +76,10 @@ class _ListarProdutoState extends State<ListarProduto>
                             return SizedBox(
                               height: MediaQuery.of(context).size.height * 0.9,
                               child: ModalProduto(
+                                id: object['foods'][index]['id'],
                                 subtitulo: object['foods'][index]['subtitulo'],
                                 valor: object['foods'][index]['valor'],
+                                // ignore: prefer_interpolation_to_compose_strings
                                 img: "https://api.gdelivery.app.br/files/" +
                                     object['foods'][index]['img'],
                                 titulo: object['foods'][index]['titulo'],
@@ -149,7 +151,6 @@ class _ListarProdutoState extends State<ListarProduto>
                     unselectedLabelColor: Colors.white,
                     indicatorWeight: 5.0,
                     tabs: data.map((e) {
-                      print(e);
                       return Tab(
                           child: Text(
                         e['titulo'],
